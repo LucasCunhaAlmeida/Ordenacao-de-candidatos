@@ -1,0 +1,7 @@
+6 1 1
+Antônio 31 20 30
+Marcos 25 30 30
+Maria 31 10 10
+Joana 27 20 40
+Caio 18 13 17
+José 25 35 25
