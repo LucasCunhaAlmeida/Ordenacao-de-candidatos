@@ -29,12 +29,12 @@ public class Principal {
 
                 if(peso_especifico < 1.0 || peso_especifico > 10.0){
                     System.out.printf("O peso específico é %.0f e não está entre 1 e 10 <incorreto>\n", peso_especifico);
-                    System.out.println("Tente novamente");
+                    System.out.println("Corrija seu arquivo de texto e tente novamente!");
                     return;
                 }else{
                     if((peso_geral > peso_especifico) || (peso_geral < 1.0)){
                         System.out.printf("O peso geral é %.0f e é maior do que o específico ou é menor que 0 <incorreto>\n", peso_geral);
-                        System.out.println("Tente novamente");
+                        System.out.println("Corrija seu arquivo de texto e tente novamente!");
                         return;
                     }
                 }
@@ -49,6 +49,7 @@ public class Principal {
                     String[] dados = linha.split(" ");// Particiona novamente a linha a partir de espaços " "
                     if (dados.length < 4) { // Se não tiver pelo menos 4 espaços então não está no formato(nome, idade, acertos G, acertos E)
                         System.err.println("Formato de linha incorreto: " + linha);
+                        System.out.println("Corrija seu arquivo de texto e tente novamente!");
                         return;
                     }
 
@@ -58,24 +59,33 @@ public class Principal {
                         int acertos_gerais = Integer.parseInt(dados[dados.length - 2]);// Pegando os acertos gerais
                         int acertos_especificos = Integer.parseInt(dados[dados.length - 1]);// Pegando os acertos especificos
 
-                        // Esperar a resposta do professor
-                        if(acertos_gerais > 50 || acertos_gerais < 0){
-                            System.out.println();
-                            return;
-                        }
+                        
                         // Lembrando: o nome é tudo o que está antes da idade
                         // Usamos o StringBuilder para não precisar fazer varios objetos do tipo String para cada parte do nome
                         StringBuilder contruir_nome = new StringBuilder();
                         for (int i = 0; i < dados.length - 3; i++) {// Pega o "dados" da posição 0 até o final do nome
-                            if (i > 0){// Não queremos um espaço antes do primeiro nome, mas depois queremos para dividir o sobrenome
+                            if (i > 0) {// Não queremos um espaço antes do primeiro nome, mas depois queremos para dividir o sobrenome
                                 contruir_nome.append(" ");
                             }
                             contruir_nome.append(dados[i]);// Pegando parte por parte do nome que antes foi quebrado pelo método "split"
                         }
                         String nome = contruir_nome.toString();// Convertendo o nome completo para uma String comum
+                        
+                        if((acertos_gerais > 50) || (acertos_gerais < 0)){
+                            System.out.printf("%s tem acerto geral %d que é maior que 50 ou negativo. ", nome, acertos_gerais);
+                            System.out.println("Corrija seu arquivo de texto e tente novamente!");
+                            return;
+                        }else{
+                            if((acertos_especificos > 50) || (acertos_especificos < 0)){
+                                System.out.printf("%s tem acerto específico %d que é maior que 50 ou negativo.  ", nome, acertos_especificos);
+                                System.out.println("Corrija seu arquivo de texto e tente novamente!");
+                                return;
+                            }
+                        }
 
+                        double media = (((acertos_gerais*peso_geral) + (acertos_especificos*peso_especifico)) / (peso_especifico+peso_geral));
                         // Criando um objeto do tipo Participante a partir dos dados extraidos
-                        Participante participante = new Participante(nome, idade, acertos_gerais, acertos_especificos);
+                        Participante participante = new Participante(nome, idade, acertos_gerais, acertos_especificos,media);
                         participantes[indice] = participante;// Atribuindo ao vetor de Participante esse novo objeto criado
                         indice++;
                     } catch (NumberFormatException e) {
@@ -83,6 +93,8 @@ public class Principal {
                     }
                 }
 
+                //MergeSort.merge_sort();
+                QuickSort.quickSort(participantes,0,participantes.length-1);
                 // Exibe os dados para verificar
                 System.out.println("Quantidade de Participantes: " + quant_participantes);
                 System.out.println("Peso dos Conhecimentos Gerais: " + peso_geral);
@@ -93,6 +105,7 @@ public class Principal {
                         System.out.println(p);
                     }
                 }
+                Ordenacao.desempatar(participantes);
             }
         } catch (IOException e) {
             e.printStackTrace();

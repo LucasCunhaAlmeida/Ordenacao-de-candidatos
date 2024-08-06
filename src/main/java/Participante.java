@@ -4,20 +4,64 @@ public class Participante {
     private int acertosGerais;
     private int acertosEspecificos;
 
-    public Participante(String nome, int idade, int acertosGerais, int acertosEspecificos) {
+    private double media;
+
+    public Participante(String nome, int idade, int acertosGerais, int acertosEspecificos,double media) {
         this.nome = nome;
         this.idade = idade;
         this.acertosGerais = acertosGerais;
         this.acertosEspecificos = acertosEspecificos;
+        this.media = media;
     }
 
     @Override
-    public String toString() {
+    public String   toString() {
         return "Participante{" +
                 "nome='" + nome + '\'' +
                 ", idade=" + idade +
                 ", acertosGerais=" + acertosGerais +
                 ", acertosEspecificos=" + acertosEspecificos +
+                ", media=" + media +
                 '}';
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public int getAcertosGerais() {
+        return acertosGerais;
+    }
+
+    public void setAcertosGerais(int acertosGerais) {
+        this.acertosGerais = acertosGerais;
+    }
+
+    public int getAcertosEspecificos() {
+        return acertosEspecificos;
+    }
+
+    public void setAcertosEspecificos(int acertosEspecificos) {
+        this.acertosEspecificos = acertosEspecificos;
+    }
+
+    public double getMedia() {
+        return media;
+    }
+
+    public void setMedia(double media) {
+        this.media = media;
     }
 }
