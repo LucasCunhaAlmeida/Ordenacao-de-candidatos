@@ -221,10 +221,23 @@ public class Principal {
                             "contra os " + tempo_execucao_merge + " segundos do MergeSort");
                     writer.newLine();
                 }
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo_merge, true))) {
+                    writer.write("O algoritmo mais rápido foi o QuickSort com " + tempo_execucao_quick + " segundos " +
+                            "contra os " + tempo_execucao_merge + " segundos do MergeSort(Desse aqui)");
+                    writer.newLine();
+                }
+
             } else {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo_merge, true))) {
                     writer.write("O algoritmo mais rápido foi esse (MergeSort) com " + tempo_execucao_merge + " segundos " +
                             "contra os " + tempo_execucao_quick + " segundos do QuickSort");
+                    writer.newLine();
+                }
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo_quick, true))) {
+                    writer.write("O algoritmo mais rápido foi o MergeSort com " + tempo_execucao_merge + " segundos " +
+                        "contra os " + tempo_execucao_quick + " segundos do QuickSort(Desse aqui)");
                     writer.newLine();
                 }
             }
