@@ -1,0 +1,18 @@
+Passo 1: Antônio-6.0 Marcos-16.0 Maria-27.5 Joana-6.0 Caio-15.5 José-25.0
+Passo 2: Marcos-16.0 Antônio-6.0 Maria-27.5 Joana-6.0 Caio-15.5 José-25.0
+Passo 3: Marcos-16.0 Antônio-6.0 Maria-27.5 Joana-6.0 Caio-15.5 José-25.0
+Passo 4: Maria-27.5 Marcos-16.0 Antônio-6.0 Joana-6.0 Caio-15.5 José-25.0
+Passo 5: Maria-27.5 Marcos-16.0 Antônio-6.0 Joana-6.0 Caio-15.5 José-25.0
+Passo 6: Maria-27.5 Marcos-16.0 Antônio-6.0 Caio-15.5 Joana-6.0 José-25.0
+Passo 7: Maria-27.5 Marcos-16.0 Antônio-6.0 Caio-15.5 Joana-6.0 José-25.0
+Passo 8: Maria-27.5 Marcos-16.0 Antônio-6.0 José-25.0 Caio-15.5 Joana-6.0
+Passo 9: Maria-27.5 Marcos-16.0 Antônio-6.0 José-25.0 Caio-15.5 Joana-6.0
+Passo 10: Maria-27.5 José-25.0 Marcos-16.0 Caio-15.5 Antônio-6.0 Joana-6.0
+Tempo de Execução: 0.0013774 Segundos
+Resultado do Desempate:
+Maria-27.5
+José-25.0
+Marcos-16.0
+Caio-15.5
+Joana-6.0
+Antônio-6.0

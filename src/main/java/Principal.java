@@ -1,7 +1,6 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 public class Principal {
 
     public static void main(String[] args) {
@@ -11,7 +10,10 @@ public class Principal {
             return;
         }
 
-        String caminho = args[0]; // Caminho do arquivo passado como argumento
+        extrairDadosArquivo(args[0]);// Caminho do arquivo passado como argumento
+    }
+
+    public static void extrairDadosArquivo(String caminho) {
         Participante[] participantes; // Vetor de Participantes(ainda não informado o tamanho)
         int quant_participantes; // Ao ler o arquivo vamos saber a quantidade de participantes
         double peso_geral; // Peso da nota geral
@@ -27,12 +29,12 @@ public class Principal {
                 peso_geral = Double.parseDouble(primeiraLinha[1]);// Segunda parte pega o peso geral
                 peso_especifico = Double.parseDouble(primeiraLinha[2]);// Terceira parte pega o peso específico
 
-                if(peso_especifico < 1.0 || peso_especifico > 10.0){
+                if (peso_especifico < 1.0 || peso_especifico > 10.0) {
                     System.out.printf("O peso específico é %.0f e não está entre 1 e 10 <incorreto>\n", peso_especifico);
                     System.out.println("Corrija seu arquivo de texto e tente novamente!");
                     return;
-                }else{
-                    if((peso_geral > peso_especifico) || (peso_geral < 1.0)){
+                } else {
+                    if ((peso_geral > peso_especifico) || (peso_geral < 1.0)) {
                         System.out.printf("O peso geral é %.0f e é maior do que o específico ou é menor que 0 <incorreto>\n", peso_geral);
                         System.out.println("Corrija seu arquivo de texto e tente novamente!");
                         return;
@@ -59,7 +61,7 @@ public class Principal {
                         int acertos_gerais = Integer.parseInt(dados[dados.length - 2]);// Pegando os acertos gerais
                         int acertos_especificos = Integer.parseInt(dados[dados.length - 1]);// Pegando os acertos especificos
 
-                        
+
                         // Lembrando: o nome é tudo o que está antes da idade
                         // Usamos o StringBuilder para não precisar fazer varios objetos do tipo String para cada parte do nome
                         StringBuilder contruir_nome = new StringBuilder();
@@ -70,22 +72,22 @@ public class Principal {
                             contruir_nome.append(dados[i]);// Pegando parte por parte do nome que antes foi quebrado pelo método "split"
                         }
                         String nome = contruir_nome.toString();// Convertendo o nome completo para uma String comum
-                        
-                        if((acertos_gerais > 50) || (acertos_gerais < 0)){
+
+                        if ((acertos_gerais > 50) || (acertos_gerais < 0)) {
                             System.out.printf("%s tem acerto geral %d que é maior que 50 ou negativo. ", nome, acertos_gerais);
                             System.out.println("Corrija seu arquivo de texto e tente novamente!");
                             return;
-                        }else{
-                            if((acertos_especificos > 50) || (acertos_especificos < 0)){
+                        } else {
+                            if ((acertos_especificos > 50) || (acertos_especificos < 0)) {
                                 System.out.printf("%s tem acerto específico %d que é maior que 50 ou negativo.  ", nome, acertos_especificos);
                                 System.out.println("Corrija seu arquivo de texto e tente novamente!");
                                 return;
                             }
                         }
 
-                        double media = (((acertos_gerais*peso_geral) + (acertos_especificos*peso_especifico)) / (peso_especifico+peso_geral));
+                        double media = (((acertos_gerais * peso_geral) + (acertos_especificos * peso_especifico)) / (peso_especifico + peso_geral));
                         // Criando um objeto do tipo Participante a partir dos dados extraidos
-                        Participante participante = new Participante(nome, idade, acertos_gerais, acertos_especificos,media);
+                        Participante participante = new Participante(nome, idade, acertos_gerais, acertos_especificos, media);
                         participantes[indice] = participante;// Atribuindo ao vetor de Participante esse novo objeto criado
                         indice++;
                     } catch (NumberFormatException e) {
@@ -93,8 +95,6 @@ public class Principal {
                     }
                 }
 
-                //MergeSort.merge_sort();
-                QuickSort.quickSort(participantes,0,participantes.length-1);
                 // Exibe os dados para verificar
                 System.out.println("Quantidade de Participantes: " + quant_participantes);
                 System.out.println("Peso dos Conhecimentos Gerais: " + peso_geral);
@@ -105,10 +105,111 @@ public class Principal {
                         System.out.println(p);
                     }
                 }
-                Ordenacao.desempatar(participantes);
+                leituraTempos(participantes);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+    public static void leituraTempos(Participante[] participantes) {
+        long inicio_tempo, fim_tempo; // Para guardar os tempos de ordenação
+
+        // Fazendo uma cópia profunda de participantes, esse participantes_aux vai servir para o QuickSort
+        Participante[] participantes_aux = new Participante[participantes.length];
+        for (int i = 0; i < participantes.length; i++) {
+            participantes_aux[i] = participantes[i].clone();
+        }
+
+        // Inicia a escrita no arquivo para o QuickSort
+        String caminhoArquivo = "SaidaQuickSort.txt";
+
+        // Medir tempo de execução para o QuickSort
+        QuickSort.limparPassos(); // Limpa os passos anteriores
+        inicio_tempo = System.nanoTime();
+        QuickSort.quickSort(participantes_aux, 0, participantes_aux.length - 1);
+        fim_tempo = System.nanoTime();
+
+        // Tempo de execução
+        double tempo_execucao = (fim_tempo - inicio_tempo) / 1e9;
+
+        // Aplicar desempate
+        Ordenacao.desempatar(participantes_aux);
+
+        // Recupera os passos do QuickSort
+        List<String> passos1 = QuickSort.getPassos();
+
+        // Escreve os passos e o tempo de execução no arquivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
+            for (String passo : passos1) {
+                writer.write(passo);
+                writer.newLine();
+            }
+            writer.write("Tempo de Execução: " + tempo_execucao + " Segundos");
+            writer.newLine();
+
+            // Adiciona o resultado do desempate se houver
+            boolean teveEmpate = Ordenacao.verificaEmpate(participantes_aux);
+            if (teveEmpate) {
+                writer.write("Resultado do Desempate:");
+                writer.newLine();
+                for (Participante p : participantes_aux) {
+                    writer.write(p.toString());
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Inicia a escrita no arquivo para o MergeSort
+        caminhoArquivo = "SaidaMergeSort.txt";
+
+        // Medir tempo de execução para o MergeSort
+        inicio_tempo = System.nanoTime();
+        MergeSort.merge_sort(participantes, 0, participantes.length - 1);
+        fim_tempo = System.nanoTime();
+
+        // Tempo de execução
+        tempo_execucao = (fim_tempo - inicio_tempo) / 1e9;
+
+        // Aplicar desempate
+        Ordenacao.desempatar(participantes);
+
+        // Recupera os passos do MergeSort
+        List<String> passos2 = MergeSort.getPassos();
+
+        // Escreve os passos e o tempo de execução no arquivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
+            for (String passo : passos2) {
+                writer.write(passo);
+                writer.newLine();
+            }
+            writer.write("Tempo de Execução: " + tempo_execucao + " Segundos");
+            writer.newLine();
+
+            // Adiciona o resultado do desempate se houver
+            boolean teveEmpate = Ordenacao.verificaEmpate(participantes);
+            if (teveEmpate) {
+                writer.write("Resultado do Desempate:");
+                writer.newLine();
+                for (Participante p : participantes) {
+                    writer.write(p.toString());
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Exibe o estado final dos participantes
+        System.out.println("Depois: \n");
+        for (Participante p : participantes) { // Aqui está usando o toString da classe Participante
+            if (p != null) {
+                System.out.println(p);
+            }
+        }
+    }
+
 }

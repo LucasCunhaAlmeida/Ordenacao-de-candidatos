@@ -15,14 +15,12 @@ public class Participante {
     }
 
     @Override
+    protected Participante clone() {
+        return new Participante(this.nome, this.idade, this.acertosGerais, this.acertosEspecificos, this.media);
+    }
+    @Override
     public String   toString() {
-        return "Participante{" +
-                "nome='" + nome + '\'' +
-                ", idade=" + idade +
-                ", acertosGerais=" + acertosGerais +
-                ", acertosEspecificos=" + acertosEspecificos +
-                ", media=" + media +
-                '}';
+        return "" + nome + '-' + media;
     }
 
     public String getNome() {
