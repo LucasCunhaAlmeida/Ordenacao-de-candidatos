@@ -30,6 +30,7 @@ public class Principal {
                 peso_geral = Double.parseDouble(primeiraLinha[1]); // Segunda parte pega o peso geral
                 peso_especifico = Double.parseDouble(primeiraLinha[2]); // Terceira parte pega o peso específico
 
+                // Verificando se os pesos são validos
                 if (peso_especifico < 1.0 || peso_especifico > 10.0) {
                     System.out.printf("O peso específico é %.0f e não está entre 1 e 10 <incorreto>\n", peso_especifico);
                     System.out.println("Corrija seu arquivo de texto e tente novamente!");
@@ -85,7 +86,9 @@ public class Principal {
                             }
                         }
 
+                        // Calculando a média com os dados obtidos
                         double media = (((acertos_gerais * peso_geral) + (acertos_especificos * peso_especifico)) / (peso_especifico + peso_geral));
+
                         // Criando um objeto do tipo Participante a partir dos dados extraídos
                         Participante participante = new Participante(nome, idade, acertos_gerais, acertos_especificos, media);
                         participantes[indice] = participante; // Atribuindo ao vetor de Participante esse novo objeto criado
@@ -95,14 +98,15 @@ public class Principal {
                     }
                 }
 
-                // Verificar se o número de participantes lidos é menor que o esperado
+                // Verificando se o número de participantes lidos é menor que o esperado
                 if (indice < quant_participantes) {
                     System.err.println("Número de participantes lidos é menor que o esperado. Lido: " + indice + ", Esperado: " + quant_participantes);
                 }
 
-                // Filtrar participantes nulos
+                // Filtra se houver participantes nulos
                 participantes = Arrays.stream(participantes).filter(p -> p != null).toArray(Participante[]::new);
 
+                // Chama a leitura de tempos com os dados já tratados
                 leituraTempos(participantes);
             }
         } catch (IOException e) {
@@ -110,6 +114,7 @@ public class Principal {
         }
     }
 
+    // Chama as ordenações para ver qual é o tempo e escreve nos dois arquivos de texto
     public static void leituraTempos(Participante[] participantes) {
         long inicio_tempo, fim_tempo; // Para guardar os tempos de ordenação
 
@@ -119,25 +124,24 @@ public class Principal {
             participantes_aux[i] = participantes[i] != null ? participantes[i].clone() : null;
         }
 
-        // Inicia a escrita no arquivo para o QuickSort
+        // Nome do arquivo de texto que já está criado para o quick
         String caminhoArquivo_quick = "SaidaQuickSort.txt";
 
-        // Medir tempo de execução para o QuickSort
-        QuickSort.limparPassos(); // Limpa os passos anteriores
+        // Medindo tempo de execução para o QuickSort
         inicio_tempo = System.nanoTime();
         QuickSort.quickSort(participantes_aux, 0, participantes_aux.length - 1);
         fim_tempo = System.nanoTime();
 
-        // Tempo de execução
+        // Tempo de execução do quick
         double tempo_execucao_quick = (fim_tempo - inicio_tempo) / 1e9;
 
-        // Aplicar desempate
+        // Aplicando desempate no vetor de que foi ordenado pelo quick sort
         Ordenacao.desempatar(participantes_aux);
 
         // Recupera os passos do QuickSort
         List<String> passos1 = QuickSort.getPassos();
 
-        // Escreve os passos e o tempo de execução no arquivo
+        // Escrevendo os passos e o tempo de execução no arquivo
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo_quick))) {
             for (String passo : passos1) {
                 writer.write(passo);
@@ -164,15 +168,16 @@ public class Principal {
             e.printStackTrace();
         }
 
-        // Repetir o processo para MergeSort
+        // Repetindo o processo para MergeSort
         Participante[] participantes_aux2 = new Participante[participantes.length];
         for (int i = 0; i < participantes.length; i++) {
             participantes_aux2[i] = participantes[i] != null ? participantes[i].clone() : null;
         }
 
+        // Nome do arquivo de texto que já está criado para o merge
         String caminhoArquivo_merge = "SaidaMergeSort.txt";
 
-        // Medir tempo de execução para o MergeSort
+        // Medindo tempo de execução para o MergeSort
         inicio_tempo = System.nanoTime();
         MergeSort.merge_sort(participantes, 0, participantes.length - 1);
         fim_tempo = System.nanoTime();
@@ -180,7 +185,7 @@ public class Principal {
         // Tempo de execução
         double tempo_execucao_merge = (fim_tempo - inicio_tempo) / 1e9;
 
-        // Aplicar desempate
+        // Aplicando desempate
         Ordenacao.desempatar(participantes);
 
         // Recupera os passos do MergeSort
@@ -213,9 +218,11 @@ public class Principal {
             e.printStackTrace();
         }
 
-        // Para saber qual algoritmo foi mais rápido e adicionar ao final do arquivo correto
+
         try {
+            // Para saber qual algoritmo foi mais rápido e adicionar ao final do arquivo correto
             if (tempo_execucao_quick < tempo_execucao_merge) {
+                // Abrindo a saida do quick e do merge para escrever qual foi o tempo mais rapido
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo_quick, true))) {
                     writer.write("O algoritmo mais rápido foi esse (QuickSort) com " + tempo_execucao_quick + " segundos " +
                             "contra os " + tempo_execucao_merge + " segundos do MergeSort");
@@ -229,6 +236,8 @@ public class Principal {
                 }
 
             } else {
+
+                // Abrindo a saida do quick e do merge para escrever qual foi o tempo mais rapido
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo_merge, true))) {
                     writer.write("O algoritmo mais rápido foi esse (MergeSort) com " + tempo_execucao_merge + " segundos " +
                             "contra os " + tempo_execucao_quick + " segundos do QuickSort");

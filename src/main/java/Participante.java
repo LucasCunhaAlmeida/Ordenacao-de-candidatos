@@ -14,10 +14,12 @@ public class Participante {
         this.media = media;
     }
 
+    // Para clonar verdadeiramente os vetores de Partipantes
     @Override
     protected Participante clone() {
         return new Participante(this.nome, this.idade, this.acertosGerais, this.acertosEspecificos, this.media);
     }
+
     @Override
     public String toString() {
         return String.format("%s-%.2f", nome, media);

@@ -194,7 +194,7 @@ Passo 97: Joana-33,33 Paulo-31,67 Rafael-31,67 Marcos-30,00 Juliana-30,00 José-
 
 Passo 98: Joana-33,33 Paulo-31,67 Rafael-31,67 Marcos-30,00 Juliana-30,00 Luciana-30,00 José-28,33 Roberto-28,33 Felipe-28,33 Monica-28,33 Antonio-26,67 Ricardo-26,67 Aline-26,67 Sergio-26,67 Tiago-26,67 Isabela-26,67 Marcelo-26,67 Diego-26,67 Fernando-26,67 Adriana-26,67 Henrique-26,67 Elaine-26,67 Tatiane-25,00 Daniel-25,00 Ana-23,33 Fernanda-23,33 Patricia-23,33 André-23,33 Leonardo-23,33 Fabio-23,33 Beatriz-21,67 Gustavo-21,67 Sandra-21,67 Pedro-21,67 Bruna-21,67 Rodrigo-21,67 Cristina-21,67 Carla-20,00 Luiz-20,00 Lara-20,00 Camila-20,00 Bruno-18,33 Eduardo-18,33 Tatiana-18,33 Renata-18,33 Marta-18,33 Carolina-16,67 Murilo-16,67 Caio-15,67 Maria-10,00
 
-Tempo de Execução: 0.0361195 Segundos
+Tempo de Execução: 0.0279032 Segundos
 Resultado do Desempate:
 Joana-33,33
 Paulo-31,67
@@ -246,4 +246,4 @@ Carolina-16,67
 Murilo-16,67
 Caio-15,67
 Maria-10,00
-O algoritmo mais rápido foi esse (MergeSort) com 0.0361195 segundos contra os 0.1676046 segundos do QuickSort
+O algoritmo mais rápido foi esse (MergeSort) com 0.0279032 segundos contra os 0.1914132 segundos do QuickSort
