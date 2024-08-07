@@ -19,8 +19,8 @@ public class Participante {
         return new Participante(this.nome, this.idade, this.acertosGerais, this.acertosEspecificos, this.media);
     }
     @Override
-    public String   toString() {
-        return "" + nome + '-' + media;
+    public String toString() {
+        return String.format("%s-%.2f", nome, media);
     }
 
     public String getNome() {

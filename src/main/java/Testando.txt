@@ -1,7 +1,0 @@
-6 1 1
-Antônio 31 10 2
-Marcos 31 12 20
-Maria 30 21 34
-Joana 27 10 2
-Caio 18 17 14
-José 25 20 30
