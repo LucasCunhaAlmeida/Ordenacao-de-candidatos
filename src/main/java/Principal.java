@@ -149,6 +149,7 @@ public class Principal {
 
             // Adiciona o resultado do desempate se houver
             boolean teveEmpate = Ordenacao.verificaEmpate(participantes_aux);
+
             if (teveEmpate) {
                 writer.write("Resultado do Desempate:");
                 writer.newLine();
@@ -180,7 +181,7 @@ public class Principal {
         double tempo_execucao_merge = (fim_tempo - inicio_tempo) / 1e9;
 
         // Aplicar desempate
-        Ordenacao.desempatar(participantes_aux2);
+        Ordenacao.desempatar(participantes);
 
         // Recupera os passos do MergeSort
         List<String> passos2 = MergeSort.getPassos();
@@ -196,11 +197,12 @@ public class Principal {
             writer.newLine();
 
             // Adiciona o resultado do desempate se houver
-            boolean teveEmpate = Ordenacao.verificaEmpate(participantes_aux2);
+            boolean teveEmpate = Ordenacao.verificaEmpate(participantes);
+
             if (teveEmpate) {
                 writer.write("Resultado do Desempate:");
                 writer.newLine();
-                for (Participante p : participantes_aux2) {
+                for (Participante p : participantes) {
                     if (p != null) {
                         writer.write(p.toString());
                         writer.newLine();
